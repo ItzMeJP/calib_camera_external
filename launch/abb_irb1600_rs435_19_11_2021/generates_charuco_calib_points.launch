@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+	<!-- posicao estimada pela probe tool no local na referencia do charuco -->
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_ch" args=" 0.0828438 -.884479 -0.0382097 -0.00783969 -0.00137015 0.707827 0.706341 robot_base charuco 100" />
+
+	<!-- posicao estimada pela probe tool no local na referencia do charuco -->
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_0"  args=" -.2512 -.72377 .58373 0.715272 0.698776 0.00625841 0.00762991 robot_base wrist_0  100" />
+
+	<!-- rotações centrais -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_1"  args=" 0 0 0 0 0 -0.7071068 0.7071068  wrist_0 wrist_1 100" />
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_2"  args="0 0 0 0 0 0.7071068 0.7071068 wrist_0 wrist_2 100" />
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_3"  args=" 0 0 0 0 0 1 0  wrist_0 wrist_3 100" />
+
+	<!-- cruz -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_4"  args="0.199821429 0 0 0 -0.258819 0 0.9659258 wrist_0 wrist_4 100" /> 	<!-- -30 ry -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_5"  args="-0.199821429 0 0 0 0.258819 0 0.9659258 wrist_0 wrist_5 100" />  <!--  30 ry -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_6"  args="0 .27975 0 0.258819 0 0 0.9659258 wrist_0 wrist_6 100" /> <!--  30 rx -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_7"  args="0 -.27975 0 -0.258819 0 0 0.9659258 wrist_0 wrist_7 100" /><!--  -30 rx -->
+
+	<!-- vertices -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_8"  args="0 -0.27975 0 -0.258819 0 0 0.9659258 wrist_4 wrist_8 100" /> <!-- -30 rx -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_11"  args="0 0.27975 0 0.258819 0 0 0.9659258 wrist_4 wrist_11 100" /> <!--  30 ry -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_9"  args="0 -0.27975 0 -0.258819 0 0 0.9659258 wrist_5 wrist_9 100" /> <!-- -30 ry -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_10"  args="0 0.27975 0 0.258819 0 0 0.9659258 wrist_5 wrist_10 100" /> <!--  30 ry -->
+
+	<!-- cruz 90 deg-->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_12"  args="0 0 0 0 0 0.7071068 0.7071068 wrist_4 wrist_12 100" /> <!--  90 rz -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_13"  args="0 0 0 0 0 0.7071068 0.7071068 wrist_5 wrist_13 100" /> <!--  90 rz -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_14"  args="0 0 0 0 0 0.7071068 0.7071068 wrist_6 wrist_14 100" /> <!--  90 rz -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_15"  args="0 0 0 0 0 0.7071068 0.7071068 wrist_7 wrist_15 100" /> <!--  90 rz -->
+
+	<!-- vertices 90deg-->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_16"  args="0 0 0 0 0 0.7071068 0.7071068 wrist_8 wrist_16 100" /> <!--  90 rz -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_19"  args="0 0 0 0 0 0.7071068 0.7071068 wrist_11 wrist_19 100" /> <!--  90 rz -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_17"  args="0 0 0 0 0 0.7071068 0.7071068 wrist_9 wrist_17 100" /> <!--  90 rz -->
+
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_18"  args="0 0 0 0 0 0.7071068 0.7071068 wrist_10 wrist_18 100" /> <!--  90 rz -->
+
+
+
+
+
+	<!-- cruz rotacionada a 90 -->
+
+	<!-- vertices rotacionada a 90 -->
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find calib_camera_external)/config/generate_calib.rviz" />
+
+
+</launch>

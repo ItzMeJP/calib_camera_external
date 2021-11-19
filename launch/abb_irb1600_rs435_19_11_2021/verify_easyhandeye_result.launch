@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<launch>
+   <arg name="namespace_prefix" default="abb_calib_inteld435" />
+
+	<!--position P1 in TP (pose of TCP0 during the CharucoPoseEstimation). The robot must be in the position P0 to corrected measurements-->
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_p0"  args="-0.2512 -0.72377 0.58373 0.715272 0.698776 0.00625841 0.00762991 robot_base tool0 100" />
+
+  <!--infelizmente perdi o probe tool na hora de fazer este exemplo caso-->
+
+  <include file="$(find calib_camera_external)/launch/realsense_d435.launch">
+    <arg name="json_file_path"      default=""/>
+  </include>
+
+  <arg name="image_topic" default="/camera/infra1/image_rect_raw" />
+	<arg name="camera_info_topic" default="/camera/infra1/camera_info" />
+
+	<include file="$(find calib_camera_external)/launch/charuco_detector_standalone.launch">
+    <!--arg name="squares_sides_size_in_meters" default="0.03996428571" /--> <!--maior-->
+   <!--arg name="markers_sides_size_in_meters" default="0.023978571" /-->
+    <arg name="squares_sides_size_in_meters" default="0.02805" /><!--menor-->
+    <arg name="markers_sides_size_in_meters" default="0.01683" />
+		<arg name="number_of_squares_in_x" default="10" />
+		<arg name="number_of_squares_in_y" default="14" />
+		<arg name="number_of_markers" default="70" />
+		<arg name="number_of_bits_for_markers_sides" default="6" />
+		<arg name="dictionary_id" default="10" />
+		<arg name="image_topic" default="$(arg image_topic)" />
+		<arg name="camera_info_topic" default="$(arg camera_info_topic)" />
+		<arg name="image_analysis_publish_topic" default="$(arg image_topic)_charuco_detection" />
+		<arg name="charuco_pose_publish_topic" default="$(arg camera_info_topic)_charuco_pose" />
+	</include>
+
+	<!-- camera_link pose to tool0. Estimated by easyhandeye -->
+  <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_camera_d435"  args=" -0.016651746849288683 0.23713801801978257 0.1589293391764847 -0.0053121823096013866 -0.7018028633858873 -0.01548127957138288 0.7121831587768082 tool0 camera_link 100" />
+
+    	<!-- charuco alligned with effective tool. Estimated orientation values by rosrun tf tf_echo charuco ponta_prova-->
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_chalignd_tool"  args="0 0 0 1 0 0 0 charuco charuco_align 100" />
+        <!--> run the follow command and save the pose into TP as traget point. Be CAREFUL: put a offset in Z to avoid collision between effective tcp and the charuco
+              rosrun tf tf_echo robot_base charuco_align_t <-->
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find calib_camera_external)/config/verify_result.rviz" />
+
+</launch>

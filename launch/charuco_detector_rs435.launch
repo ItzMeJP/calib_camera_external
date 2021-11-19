@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+	<include file="$(find calib_camera_external)/launch/realsense_d435.launch"/>
+
+	<!--node pkg="tf" type="static_transform_publisher" name="static_transform_publisher_1"  args=" -0.0051 -0.7167 0.4406 0.48376 0.49844 -0.51120 0.50617 robot_base camera_link 100" /-->
+
+
+	<arg name="image_topic" default="/camera/infra1/image_rect_raw" />
+	<arg name="camera_info_topic" default="/camera/infra1/camera_info" />
+
+	<!-- load the charuco detector -->
+	<include file="$(find calib_camera_external)/launch/charuco_detector_standalone.launch">
+		<!--arg name="squares_sides_size_in_meters" default="0.03996428571" /--> <!--maior-->
+		<!--arg name="markers_sides_size_in_meters" default="0.023978571" /-->
+		<arg name="squares_sides_size_in_meters" default="0.02805" /><!--menor-->
+		<arg name="markers_sides_size_in_meters" default="0.01683" />
+		<arg name="number_of_squares_in_x" default="10" />
+		<arg name="number_of_squares_in_y" default="14" />
+		<arg name="number_of_markers" default="70" />
+		<arg name="number_of_bits_for_markers_sides" default="6" />
+		<arg name="dictionary_id" default="10" />
+		<arg name="image_topic" default="$(arg image_topic)" />
+		<arg name="camera_info_topic" default="$(arg camera_info_topic)" />
+		<arg name="image_analysis_publish_topic" default="$(arg image_topic)_charuco_detection" />
+		<arg name="charuco_pose_publish_topic" default="$(arg camera_info_topic)_charuco_pose" />
+	</include>
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find calib_camera_external)/config/charuco_detector.rviz" />
+
+
+</launch>
